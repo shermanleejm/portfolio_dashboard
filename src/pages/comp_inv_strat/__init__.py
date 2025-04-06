@@ -1,10 +1,9 @@
 import pandas as pd
 import streamlit as st
 
-from src.pages.comparing_investment_strategies.cumulative_returns import (
-    cumulative_returns_page,
-)
-from src.pages.comparing_investment_strategies.market import market_page
+from src.pages.comp_inv_strat.cumulative_returns import cumulative_returns
+from src.pages.comp_inv_strat.long_term import long_term
+from src.pages.comp_inv_strat.market import market_page
 from src.services.data import get_data
 from src.services.strategy import strategy
 
@@ -60,7 +59,10 @@ def comparing_investment_strategies_page():
     ).dropna()
 
     with strategy_tab:
-        cumulative_returns_page(price_df.pct_change() @ combined_weights)
+        cumulative_returns(price_df.pct_change() @ combined_weights)
 
     with market_conditions_tab:
         market_page(price_df @ combined_weights)
+
+    with long_term_tab:
+        long_term(price_df, combined_weights)

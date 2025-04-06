@@ -1,6 +1,6 @@
 import streamlit as st
 
-from src.pages.comparing_investment_strategies import (
+from src.pages.comp_inv_strat import (
     comparing_investment_strategies_page,
 )
 
