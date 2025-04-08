@@ -1,9 +1,11 @@
 import pandas as pd
 import yfinance as yf
+from functools import lru_cache
 
 
+@lru_cache
 def get_data(
-    tickers: list[str], start_date: str, end_date: str
+    tickers: tuple[str], start_date: str, end_date: str
 ) -> tuple[pd.DataFrame, float]:
     """
     Parameters
