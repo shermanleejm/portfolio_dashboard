@@ -22,7 +22,7 @@ def examine_core_portfolios_page():
     It currently does not contain any functionality or content.
     """
     end_date = (pd.Timestamp.now()).strftime("%Y-%m-%d")
-    start_date = (pd.Timestamp.now() - pd.offsets.DateOffset(years=8)).strftime(
+    start_date = (pd.Timestamp.now() - pd.offsets.DateOffset(years=10)).strftime(
         "%Y-%m-%d"
     )
     current_portfolios = [
