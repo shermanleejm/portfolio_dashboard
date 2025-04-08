@@ -22,14 +22,14 @@ def examine_core_portfolios_page():
     It currently does not contain any functionality or content.
     """
     end_date = (pd.Timestamp.now()).strftime("%Y-%m-%d")
-    start_date = (pd.Timestamp.now() - pd.offsets.DateOffset(years=10)).strftime(
+    start_date = (pd.Timestamp.now() - pd.offsets.DateOffset(years=8)).strftime(
         "%Y-%m-%d"
     )
     current_portfolios = [
         ("equity100", "15"),
-        ("core-growth", "5"),
+        ("core-growth", "25"),
         ("core-balanced", "15"),
-        ("core-defensive", "25"),
+        ("core-defensive", "5"),
     ]
     curr_metrics = {}
     combined_weights = {}
@@ -60,6 +60,10 @@ def examine_core_portfolios_page():
     cube = np.array(
         [get_simulated_prices(combined_price_df[ticker]) for ticker in tickers]
     )
+
+    with st.expander("Core Portfolios Weights"):
+        st.write(combined_weights)
+
     stats = get_stats(cube, combined_weights)
     st.markdown(
         """
@@ -80,4 +84,5 @@ def examine_core_portfolios_page():
     st.session_state["core_portfolios"] = {
         "metrics": curr_metrics,
         "long_term_simulation_metrics": stats.to_dict(),
+        "weights": combined_weights.to_dict(),
     }

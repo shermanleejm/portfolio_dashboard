@@ -5,7 +5,7 @@ from src.pages.comp_ind_strat.cumulative_returns import cumulative_returns
 from src.pages.comp_ind_strat.long_term import long_term
 from src.pages.comp_ind_strat.market import market_page
 from src.services.data import get_data
-from src.services.strategy import strategy
+from src.services.strategy import calculate_performance_metrics, strategy
 
 
 def comparing_investment_strategies_page():
@@ -63,8 +63,16 @@ def comparing_investment_strategies_page():
     )
 
     with strategy_tab:
-        st.write("Investment strategies weights")
-        st.dataframe(combined_weights)
+        with st.expander("Investment strategies weights"):
+            st.dataframe(combined_weights)
+        combined_perf_metrics = {
+            strat: calculate_performance_metrics(
+                price_df, combined_weights[[strat]].T, risk_free_rate
+            )
+            for strat in combined_weights.columns
+        }
+        with st.expander("Investment strategies performance metrics"):
+            st.write(pd.DataFrame(combined_perf_metrics))
         cumulative_returns(price_df.pct_change() @ combined_weights)
 
     with market_conditions_tab:
