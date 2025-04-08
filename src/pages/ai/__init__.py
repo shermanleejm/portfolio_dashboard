@@ -44,7 +44,7 @@ def ai_page():
                 ```json
                 {json.dumps(st.session_state["core_portfolios"])}
                 ```
-                """,
+                """.strip(),
             },
             {
                 "role": "system",
@@ -63,7 +63,7 @@ def ai_page():
                 ```json
                 {json.dumps(st.session_state["current_investment_strategies"])}
                 ```
-                """,
+                """.strip(),
             },
             {
                 "role": "system",

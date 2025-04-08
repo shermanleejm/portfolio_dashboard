@@ -58,7 +58,13 @@ def comparing_investment_strategies_page():
         axis=1,
     ).dropna()
 
+    st.session_state["current_investment_strategies"]["weights"] = (
+        combined_weights.to_dict()
+    )
+
     with strategy_tab:
+        st.write("Investment strategies weights")
+        st.dataframe(combined_weights)
         cumulative_returns(price_df.pct_change() @ combined_weights)
 
     with market_conditions_tab:
