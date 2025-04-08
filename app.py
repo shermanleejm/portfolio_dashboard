@@ -12,7 +12,7 @@ strategy_tab, core_portf_tab, ai_tab = st.tabs(
     [
         "Comparing Investment Strategies",
         "Core portfolios",
-        "AI",
+        "AI Chatbot",
     ]
 )
 
