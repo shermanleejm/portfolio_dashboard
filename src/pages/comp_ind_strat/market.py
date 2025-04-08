@@ -29,6 +29,9 @@ def market_page(price_df: pd.DataFrame):
         cagr[col] = -(cagr[col] ** (1 / crisis_duration) - 1)
 
     st.write((cagr * 100).round(2).astype(str) + "%")
+    st.session_state["current_investment_strategies"]["cagr_during_crisis"] = (
+        cagr.to_dict()
+    )
 
     fig = px.line((1 + price_df.pct_change()).cumprod())
 

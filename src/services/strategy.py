@@ -97,3 +97,28 @@ def strategy(
     weights.rename(columns={"weight": type_}, inplace=True)
 
     return weights
+
+
+def calculate_performance_metrics(
+    actual_price_df: pd.DataFrame, weights: pd.DataFrame, risk_free_rate=0.02
+):
+    price_df = (actual_price_df @ weights.to_numpy().T)[0]
+    returns = (price_df).pct_change().dropna()
+    annualised_returns = (1 + returns).prod() ** (252 / len(returns)) - 1
+    log_returns: pd.Series = np.log(1 + returns).dropna()
+    annualised_vol = log_returns.std() * np.sqrt(252)
+    excess_returns = log_returns - risk_free_rate / 252
+    sharpe_ratio = (excess_returns.mean() / excess_returns.std()) * np.sqrt(252)
+    downside_returns = excess_returns[excess_returns < 0]
+    sortino_ratio = (excess_returns.mean() / downside_returns.std()) * np.sqrt(252)
+    max_drawdown = ((price_df - price_df.cummax()) / price_df.cummax()).min()
+    calmar_ratio = annualised_returns / abs(max_drawdown)
+
+    return {
+        "Annualized Return": annualised_returns,
+        "Annualized Volatility": annualised_vol,
+        "Sharpe Ratio": sharpe_ratio,
+        "Sortino Ratio": sortino_ratio,
+        "Max Drawdown": max_drawdown,
+        "Calmar Ratio": calmar_ratio,
+    }

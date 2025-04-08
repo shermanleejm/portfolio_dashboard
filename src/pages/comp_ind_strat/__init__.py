@@ -1,9 +1,9 @@
 import pandas as pd
 import streamlit as st
 
-from src.pages.comp_inv_strat.cumulative_returns import cumulative_returns
-from src.pages.comp_inv_strat.long_term import long_term
-from src.pages.comp_inv_strat.market import market_page
+from src.pages.comp_ind_strat.cumulative_returns import cumulative_returns
+from src.pages.comp_ind_strat.long_term import long_term
+from src.pages.comp_ind_strat.market import market_page
 from src.services.data import get_data
 from src.services.strategy import strategy
 
@@ -42,7 +42,7 @@ def comparing_investment_strategies_page():
     )
 
     price_df, risk_free_rate = get_data(
-        tickers=tickers,
+        tickers=tuple(tickers),
         start_date=start_date,
         end_date=end_date,
     )
